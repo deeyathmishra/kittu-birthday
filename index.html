@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+<title>Kittu Birthday</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+margin:0;
+font-family:Poppins;
+background:linear-gradient(135deg,#4b0082,#7b2cbf,#c77dff);
+color:white;
+overflow-x:hidden;
+scroll-behavior:smooth;
+}
+
+section{
+min-height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:40px;
+}
+
+.intro h1{
+font-family:'Dancing Script';
+font-size:80px;
+color:#ffd700;
+}
+
+button{
+padding:15px 30px;
+font-size:18px;
+border:none;
+border-radius:30px;
+background:#ff4e75;
+color:white;
+cursor:pointer;
+margin-top:15px;
+}
+
+.nextBtn{
+background:#6a00ff;
+}
+
+.photoTop{
+width:180px;
+height:180px;
+border-radius:50%;
+object-fit:cover;
+margin-bottom:20px;
+border:4px solid gold;
+box-shadow:0 0 20px gold;
+}
+
+.couple{
+display:flex;
+gap:30px;
+margin-bottom:20px;
+}
+
+.slider{
+width:320px;
+height:420px;
+overflow:hidden;
+border-radius:20px;
+box-shadow:0 10px 40px black;
+}
+
+.slider img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.cake{
+font-size:120px;
+cursor:pointer;
+}
+
+.gift{
+font-size:100px;
+cursor:pointer;
+}
+
+.message{
+display:none;
+font-size:25px;
+color:#ffd700;
+}
+
+.confetti{
+position:fixed;
+width:10px;
+height:10px;
+top:-10px;
+border-radius:3px;
+animation:confettiFall 4s linear forwards;
+z-index:999;
+}
+
+@keyframes confettiFall{
+
+0%{
+transform:translateY(-10vh) rotate(0deg);
+opacity:1;
+}
+
+100%{
+transform:translateY(110vh) rotate(720deg);
+opacity:0;
+}
+
+}
+
+.balloon{
+position:fixed;
+font-size:35px;
+bottom:-50px;
+animation:balloonUp 6s linear forwards;
+z-index:999;
+}
+
+@keyframes balloonUp{
+
+0%{
+transform:translateY(0);
+opacity:1;
+}
+
+100%{
+transform:translateY(-120vh);
+opacity:0;
+}
+
+}
+
+.birthdayText{
+position:fixed;
+top:40%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:60px;
+font-family:'Dancing Script';
+color:#ffd700;
+text-shadow:0 0 20px gold;
+z-index:999;
+}
+
+.final{
+font-family:'Dancing Script';
+font-size:70px;
+color:#ffd700;
+opacity:0;
+transition:2s;
+}
+
+.show{
+opacity:1;
+}
+
+</style>
+</head>
+
+<body>
+
+<section class="intro">
+
+<h1>PRARISHA 💜</h1>
+
+<p>A Birthday Surprise From Nittu</p>
+
+<button onclick="playSong()">Play Our Song 🎶</button>
+
+<button onclick="startSurprise()">Start Surprise 💖</button>
+
+</section>
+
+<section id="message">
+
+<img src="k1.jpg" class="photoTop">
+
+<h1>Happiest Birthday Kittu 🎂</h1>
+
+<p id="typingText"></p>
+
+<button class="nextBtn" onclick="nextSection()">Next Surprise ➜</button>
+
+</section>
+
+<section>
+
+<h2>Beautiful Memories 📸</h2>
+
+<div class="slider">
+<img id="slide">
+</div>
+
+<button class="nextBtn" onclick="nextSection()">Next Surprise ➜</button>
+
+</section>
+
+<section>
+
+<img src="k3.jpg" class="photoTop">
+
+<h2>Make A Birthday Wish 🎂</h2>
+
+<div class="cake" onclick="blowCandles()" id="cake">🎂</div>
+
+<p id="cakeText">Click cake to blow candles</p>
+
+<button class="nextBtn" onclick="nextSection()">Next Surprise ➜</button>
+
+</section>
+
+<section>
+
+<img src="k4.jpg" class="photoTop">
+
+<h2>Your Gift 🎁</h2>
+
+<div class="gift" onclick="openGift()">🎁</div>
+
+<div id="giftMsg" class="message">
+
+You are the Jugnu of my life ✨  
+Happy Birthday My Sweetu ❤️
+
+</div>
+
+<button class="nextBtn" onclick="nextSection()">Next Surprise ➜</button>
+
+</section>
+
+<section>
+
+<div class="couple">
+
+<img src="me.jpg" class="photoTop">
+
+<img src="k5.jpg" class="photoTop">
+
+</div>
+
+<h1 id="finalText" class="final">
+
+Nittu ❤️ Kittu
+
+</h1>
+
+</section>
+
+<audio id="bgMusic" loop>
+<source src="jugnu.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+let sections=document.querySelectorAll("section");
+let current=0;
+
+function nextSection(){
+
+current++;
+
+if(current<sections.length){
+
+sections[current].scrollIntoView({
+behavior:"smooth"
+});
+
+}
+
+}
+
+function playSong(){
+
+document.getElementById("bgMusic").play();
+
+}
+
+function startSurprise(){
+
+playSong();
+
+setTimeout(()=>{
+nextSection();
+},2000);
+
+}
+
+/* slideshow */
+
+const photos=["k1.jpg","k2.jpg","k3.jpg","k4.jpg","k5.jpg"];
+
+let i=0;
+
+function slide(){
+
+document.getElementById("slide").src=photos[i];
+
+i++;
+
+if(i==photos.length)i=0;
+
+}
+
+setInterval(slide,3000);
+
+/* typing message */
+
+const message=`To My Dearest 💖 luvy duvy💋......pyaari si🫣👀💋...cutieee sii👀..kitttuuuu..🤤🤤..mn krta ki kha jaau tumhe 🥵👀💋💋🫂..
+
+Hmm to aaj u ka pyaara wala din hai👀🫣💋💋..
+usse jyada pyare tum ho shonna👀💋💋💋🫂❤️...
+mere babuuu🫶❤️💋👀...
+
+HAPPIEST BIRTHDAY TO YOU MERE KITTU 🫶😘...
+
+🧿 🧿 🧿...mere sweetu💋💋💋💋💋💋❤️😚..
+
+pass hota to aaj u naa 🫣👀💋💋🫂🫦🫶❤️..
+
+love youuuuuuuuu💋💋💋💋💋💋🫂😌❤️🫶`;
+
+let index=0;
+
+function typeMessage(){
+
+if(index<message.length){
+
+document.getElementById("typingText").innerHTML+=message.charAt(index);
+
+index++;
+
+setTimeout(typeMessage,40);
+
+}
+
+}
+
+let started=false;
+
+window.addEventListener("scroll",()=>{
+
+let pos=document.getElementById("message").getBoundingClientRect().top;
+
+if(pos<window.innerHeight-100 && !started){
+
+started=true;
+typeMessage();
+
+}
+
+});
+
+/* cake celebration */
+
+function blowCandles(){
+
+document.getElementById("cakeText").innerHTML="Yay! Candles blown 🎉";
+
+for(let i=0;i<250;i++){
+
+let c=document.createElement("div");
+
+c.className="confetti";
+
+c.style.left=Math.random()*100+"vw";
+
+c.style.background=
+["#ff4e75","#ffd700","#c77dff","#00ffff","#ffffff"]
+[Math.floor(Math.random()*5)];
+
+document.body.appendChild(c);
+
+setTimeout(()=>{
+c.remove();
+},4000);
+
+}
+
+for(let i=0;i<20;i++){
+
+let b=document.createElement("div");
+
+b.className="balloon";
+
+b.innerHTML="🎈";
+
+b.style.left=Math.random()*100+"vw";
+
+document.body.appendChild(b);
+
+setTimeout(()=>{
+b.remove();
+},6000);
+
+}
+
+let text=document.createElement("div");
+
+text.className="birthdayText";
+
+text.innerHTML="Happy Birthday Kittu 🎂";
+
+document.body.appendChild(text);
+
+setTimeout(()=>{
+text.remove();
+},4000);
+
+}
+
+/* gift */
+
+function openGift(){
+
+document.getElementById("giftMsg").style.display="block";
+
+}
+
+/* final animation */
+
+window.addEventListener("scroll",()=>{
+
+let final=document.getElementById("finalText");
+
+let pos=final.getBoundingClientRect().top;
+
+if(pos<window.innerHeight-100){
+
+final.classList.add("show");
+
+}
+
+});
+
+/* swipe */
+
+let startY=0;
+let endY=0;
+
+document.addEventListener("touchstart",e=>{
+startY=e.changedTouches[0].screenY;
+});
+
+document.addEventListener("touchend",e=>{
+endY=e.changedTouches[0].screenY;
+
+if(startY-endY>50){
+nextSection();
+}
+
+});
+
+</script>
+
+</body>
+</html>
+
